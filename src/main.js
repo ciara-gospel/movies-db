@@ -87,10 +87,10 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
   .then((data) => {
     console.log(data)
 
-    const popularSection = document.getElementById('popular-release');
-    const justSection = document.getElementById('just-release');
-    const watchListSection = document.getElementById('watch-list');
-    const likesSection = document.getElementById('likes');
+    const popularSection = document.getElementById('popular-release')
+    const justSection = document.getElementById('just-release')
+    const watchListSection = document.getElementById('watch-list')
+    const likesSection = document.getElementById('likes')
     // make sure is inside an array
     if (Array.isArray(data.results)) {
       data.results.forEach(movie => {
@@ -98,11 +98,11 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
         movieCard.className = 'movie-card'
 
         const posterPath = movie.poster_path
-          ? `https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D`
-          : `https://via.placeholder.com/500x750?text=No+Image+Available`
+          ? 'https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D'
+          : 'https://via.placeholder.com/500x750?text=No+Image+Available'
 
         const image = document.createElement('img')
-        image.src = posterPath;
+        image.src = posterPath
         image.alt = movie.title || 'Movie Title'
         image.className = 'movie-img'
         movieCard.appendChild(image)
