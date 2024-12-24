@@ -3,8 +3,10 @@ import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
 
+
+
 document.querySelector('#app').innerHTML = `
-  <div class="hero">
+    <div class="hero">
         <div class="header">
           <div class="logo">
             <img src="images/hollywood-logo.png" alt="cinema" class="film">
@@ -42,7 +44,7 @@ document.querySelector('#app').innerHTML = `
         </button>
       </div>
       </div>
-      <section class="main">
+      <section id="main">
       <div class="collaboration">
         <img src="images/disney-logo-03.png" class="application">
         <img src="images/Netflix-Logo.png" alt="logo" class="application">
@@ -53,6 +55,7 @@ document.querySelector('#app').innerHTML = `
         <img src="images/Marvel_logo.png" alt="logo" class="application">
       </div>
       </section>
+    </div>
 `
 //setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
 const options = {
@@ -66,9 +69,40 @@ const options = {
 fetch('https://api.themoviedb.org/3/authentication', options)
   .then(res => res.json())
   .then((data) => {
-    console.log(data)
+   console.log(data)
 
-    const
+    const section = document.getElementById('main')
+    // make sure is inside an array
+    if (Array.isArray(data.results)) {
+      data.results.forEach(movie => {
+        const movieCard = document.createElement('div')
+        movieCard.className = 'movie-card'
+
+        const posterPath = movie.poster_path
+        ?`https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D`
+       :`https://via.placeholder.com/500x750?text=No+Image+Available`
+
+       const image = document.createElement('img')
+       image.src = posterPath
+       image.alt = movie,title || 'Movie Title'
+       image.className = 'movie-img'
+       movieCard.appendChild(image)
+
+       const title = document.getElementById('title')
+       title.textContent = movie.title || 'Unknown Title'
+       title.className = 'movie-title'
+       movieCard.appendChild(title)
+
+       const rating = document.createElement('p')
+       rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
+       rating.className = 'movie-rating'
+       movieCard.appendChild(rating)
+
+       section.appendChild(movieCard)
+      })
+    } else {
+      console.error('No movies found in the response.')
+    }
   })
-  .catch(err => console.error(err));
+  .catch((err) => console.error('Error fetching movies:',err))
 //setupCounter(document.querySelector('#counter'))
