@@ -1,7 +1,8 @@
 import './style.css'
 
 document.querySelector('#app').innerHTML = `
-    <div class="hero">
+    <div class="container">
+      <header>
         <div class="header">
           <div class="logo">
             <img src="images/hollywood-logo.png" alt="cinema" class="film">
@@ -21,25 +22,30 @@ document.querySelector('#app').innerHTML = `
             <i class="fa-solid fa-chevron-down"></i>
           </div>
       </div>
-      <div class="first-part">
-      <button class="first">series</button>
-      <h1 id="title"></h1>
-      <div class="second-part">
-        <button class="second">
-          <img src="images/play-button (1).png" alt="arrange" class="actions">
-          <p>Play Now</p>
-        </button>
-        <button class="second">
-        <img src="images/play (2).png" alt="video" class="actions">
-        <p>Watch Trailer</p>
-        </button>
-        <button class="second">
-          <img src="images/book-mark.png" alt="favor" class="actions">
-          <p>Add Watchlist</p>
-        </button>
+      </header>
+      <section id="hero-section">
+      <div class="hero-container hero-images">
+        <div class="first-part">
+        <button class="first">series</button>
+        <h1 id="title"></h1>
+        <div class="second-part">
+          <button class="second">
+            <img src="images/play-button (1).png" alt="arrange" class="actions">
+            <p>Play Now</p>
+          </button>
+          <button class="second">
+          <img src="images/play (2).png" alt="video" class="actions">
+          <p>Watch Trailer</p>
+          </button>
+          <button class="second">
+            <img src="images/book-mark.png" alt="favor" class="actions">
+            <p>Add Watchlist</p>
+          </button>
+        </div>
+        </div>
       </div>
-      </div>
-      <section id="main">
+      </section>
+      <section id="logos">
       <div class="collaboration">
         <img src="images/disney-logo-03.png" class="application">
         <img src="images/Netflix-Logo.png" alt="logo" class="application">
@@ -49,6 +55,21 @@ document.querySelector('#app').innerHTML = `
         <img src="images/Pixar_Logo170x58.png" alt="logo" class="application">
         <img src="images/Marvel_logo.png" alt="logo" class="application">
       </div>
+      </section>
+      <section id="popular-release">
+      <div class="container popular-poster">
+      </section>
+
+      <section id="just-release">
+      <div class="container just-release-poster">
+      </section>
+
+      <section id="watch-list">
+      <div class="container watch-list-poster">
+      </section>
+
+      <section id="likes">
+      <div class="container likes-poster">
       </section>
     </div>
 `
@@ -61,12 +82,15 @@ const options = {
   }
 }
 
-fetch('https://api.themoviedb.org/3/authentication', options)
+fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
   .then(res => res.json())
   .then((data) => {
     console.log(data)
 
-    const section = document.getElementById('main')
+    const popularSection = document.getElementById('popular-release');
+    const justSection = document.getElementById('just-release');
+    const watchListSection = document.getElementById('watch-list');
+    const likesSection = document.getElementById('likes');
     // make sure is inside an array
     if (Array.isArray(data.results)) {
       data.results.forEach(movie => {
@@ -74,11 +98,11 @@ fetch('https://api.themoviedb.org/3/authentication', options)
         movieCard.className = 'movie-card'
 
         const posterPath = movie.poster_path
-          ? 'https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D'
-          : 'https://via.placeholder.com/500x750?text=No+Image+Available'
+          ? `https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D`
+          : `https://via.placeholder.com/500x750?text=No+Image+Available`
 
         const image = document.createElement('img')
-        image.src = posterPath
+        image.src = posterPath;
         image.alt = movie.title || 'Movie Title'
         image.className = 'movie-img'
         movieCard.appendChild(image)
@@ -93,7 +117,7 @@ fetch('https://api.themoviedb.org/3/authentication', options)
         rating.className = 'movie-rating'
         movieCard.appendChild(rating)
 
-        section.appendChild(movieCard)
+        popularSection.appendChild(movieCard)
       })
     } else {
       console.error('No movies found in the response.')
