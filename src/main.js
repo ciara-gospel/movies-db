@@ -88,9 +88,6 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
     console.log(data)
 
     const popularSection = document.getElementById('popular-release')
-    const justSection = document.getElementById('just-release')
-    const watchListSection = document.getElementById('watch-list')
-    const likesSection = document.getElementById('likes')
     // make sure is inside an array
     if (Array.isArray(data.results)) {
       data.results.forEach(movie => {
