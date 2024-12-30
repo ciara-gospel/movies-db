@@ -105,6 +105,7 @@ h2 {
   height: 18px;
   margin: 2.5rem;
   margin-top: 1rem;
+  position: static;
 }
 
 .first {
@@ -140,4 +141,69 @@ h2 {
 
 .collaboration {
   display: flex;
+}
+
+.container {
+  width: 1248px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#popular-release-poster, #just-release-poster, #watch-list-poster, #likes-poster {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 1rem;
+}
+
+/* .movie-card img {
+  width: 200px;
+} */
+
+img {
+  width: 100%;
+}
+
+.movie-img {
+  width: 200px;
+  height: 150px;
+  border-radius: 24px;
+}
+
+.movie-card {
+  min-width: 200px;
+  min-height: 150px;
+  display: flex;
+  gap: 20px;
+  border-radius: 24px;
+  overflow: hidden;
+
+}
+
+.movie-card2, .movie-card3, .movie-card4 {
+  min-width: 200px;
+  min-height: 300px;
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* .movie-card img {
+  width: 100%;
+} */
+
+.movie-title {
+  color: #fff;
+}
+
+.movie-title-popular {
+  font-size: 16px;
+}
+
+.movie-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

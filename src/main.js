@@ -58,18 +58,30 @@ document.querySelector('#app').innerHTML = `
       </section>
       <section id="popular-release">
       <div class="container popular-poster">
+      <div id="popular-release-poster">
+      </div>
+      </div>
       </section>
 
       <section id="just-release">
       <div class="container just-release-poster">
+      <div id="just-release-poster">
+      </div>
+      </div>
       </section>
 
       <section id="watch-list">
       <div class="container watch-list-poster">
+      <div id="watch-list-poster">
+      </div>
+      </div>
       </section>
 
       <section id="likes">
       <div class="container likes-poster">
+      <div id="likes-poster">
+      </div>
+      </div>
       </section>
     </div>
 `
@@ -87,7 +99,7 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
   .then((data) => {
     console.log(data)
 
-    const popularSection = document.getElementById('popular-release')
+    const popularContainer = document.getElementById('popular-release-poster')
     // make sure is inside an array
     if (Array.isArray(data.results)) {
       data.results.forEach(movie => {
@@ -95,30 +107,207 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
         movieCard.className = 'movie-card'
 
         const posterPath = movie.poster_path
-          ? 'https://image.tmdb.org/t/p/w500$%7Bmovie.poster_path%7D'
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
           : 'https://via.placeholder.com/500x750?text=No+Image+Available'
 
         const image = document.createElement('img')
         image.src = posterPath
         image.alt = movie.title || 'Movie Title'
         image.className = 'movie-img'
-        movieCard.appendChild(image)
+        
+        // movieCard.innerHTML = `
+        // <div class="number">${index + 1}</div>
+        // <div class="popular-poster">
+        //   <img class="movie-img" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+        // </div>
+        // <div class="movie-detail"><div class="pg-age"> ${movie.adult ? 'R' : 'pg-13'}</div>
+        // <h4 class="movie-title-popular">${movie.title}</h4>
+        // <span class="movie-genre">
+        // <p>${movie.genre_ids.slice(0,2).join('') || 'unknown genre'}</p>
+        // </span>
+        // <p class="movie-star">&#11088${movie.vote_average.toFixed (1)}</p>
+        // </div>
+        
 
-        const title = document.getElementById('title')
+        // `
+        
+        const movieDetail = document.createElement('div')
+        movieDetail.textContent = movie.title || 'Unknown Title'
+        movieDetail.className = 'movie-title-popular'
+
+        const title = document.createElement('h3')
         title.textContent = movie.title || 'Unknown Title'
-        title.className = 'movie-title'
-        movieCard.appendChild(title)
+        title.className = 'movie-title-popular'
+        
 
         const rating = document.createElement('p')
         rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
         rating.className = 'movie-rating'
-        movieCard.appendChild(rating)
+        
 
-        popularSection.appendChild(movieCard)
+        popularContainer.appendChild(movieCard)
+        movieCard.appendChild(image)
+        movieCard.appendChild(movieDetail)
+        movieDetail.appendChild(title)
+        movieDetail.appendChild(rating)
+
       })
     } else {
       console.error('No movies found in the response.')
     }
   })
   .catch((err) => console.error('Error fetching movies:', err))
+
+  const options1 = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDIzZjA4MGIxYWUwMjE2NmU4NDBkZWU0NDdjMDg2NSIsIm5iZiI6MTczMzc0Mzc5Ni44NDA5OTk4LCJzdWIiOiI2NzU2ZDRiNGNmMTgwMTk2OGYwMmYxMjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.S_uDysefgK7Ex6yNxRXNA2VkLlDCvwfXTxYDh8-7iok'
+    }
+  };
+  
+  fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options1)
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+
+      const popularContainer = document.getElementById('just-release-poster')
+    // make sure is inside an array
+    if (Array.isArray(data.results)) {
+      data.results.forEach(movie => {
+        const movieCard = document.createElement('div')
+        movieCard.className = 'movie-card2'
+
+        const posterPath = movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : 'https://via.placeholder.com/500x750?text=No+Image+Available'
+
+        const image = document.createElement('img')
+        image.src = posterPath
+        image.alt = movie.title || 'Movie Title'
+        image.className = 'movie-img2'
+        
+
+        const title = document.createElement('h3')
+        title.textContent = movie.title || 'Unknown Title'
+        title.className = 'movie-title'
+        
+
+        const rating = document.createElement('p')
+        rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
+        rating.className = 'movie-rating'
+        
+
+        popularContainer.appendChild(movieCard)
+        movieCard.appendChild(image)
+        movieCard.appendChild(title)
+        movieCard.appendChild(rating)
+      })
+    } else {
+      console.error('No movies found in the response.')
+    }
+    })
+    .catch(err => console.error(err));
+
+    const options2 = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDIzZjA4MGIxYWUwMjE2NmU4NDBkZWU0NDdjMDg2NSIsIm5iZiI6MTczMzc0Mzc5Ni44NDA5OTk4LCJzdWIiOiI2NzU2ZDRiNGNmMTgwMTk2OGYwMmYxMjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.S_uDysefgK7Ex6yNxRXNA2VkLlDCvwfXTxYDh8-7iok'
+      }
+    };
+    
+    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options2)
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+
+        const popularContainer = document.getElementById('watch-list-poster')
+        // make sure is inside an array
+        if (Array.isArray(data.results)) {
+          data.results.forEach(movie => {
+            const movieCard = document.createElement('div')
+            movieCard.className = 'movie-card4'
+    
+            const posterPath = movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : 'https://via.placeholder.com/500x750?text=No+Image+Available'
+    
+            const image = document.createElement('img')
+            image.src = posterPath
+            image.alt = movie.title || 'Movie Title'
+            image.className = 'movie-img3'
+            
+    
+            const title = document.createElement('h3')
+            title.textContent = movie.title || 'Unknown Title'
+            title.className = 'movie-title'
+            
+    
+            const rating = document.createElement('p')
+            rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
+            rating.className = 'movie-rating'
+            
+    
+            popularContainer.appendChild(movieCard)
+            movieCard.appendChild(image)
+            movieCard.appendChild(title)
+            movieCard.appendChild(rating)
+          })
+        } else {
+          console.error('No movies found in the response.')
+        }
+      })
+      .catch(err => console.error(err));
+
+      const options3 = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDIzZjA4MGIxYWUwMjE2NmU4NDBkZWU0NDdjMDg2NSIsIm5iZiI6MTczMzc0Mzc5Ni44NDA5OTk4LCJzdWIiOiI2NzU2ZDRiNGNmMTgwMTk2OGYwMmYxMjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.S_uDysefgK7Ex6yNxRXNA2VkLlDCvwfXTxYDh8-7iok'
+        }
+      };
+      
+      fetch('https://api.themoviedb.org/3/trending/tv/day?language=en-US', options3)
+        .then(res => res.json())
+        .then((data) => {
+          console.log(data)
+
+          const popularContainer = document.getElementById('likes-poster')
+        // make sure is inside an array
+        if (Array.isArray(data.results)) {
+          data.results.forEach(movie => {
+            const movieCard = document.createElement('div')
+            movieCard.className = 'movie-card3'
+    
+            const posterPath = movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : 'https://via.placeholder.com/500x750?text=No+Image+Available'
+    
+            const image = document.createElement('img')
+            image.src = posterPath
+            image.alt = movie.title || 'Movie Title'
+            image.className = 'movie-img4'
+            
+    
+            const title = document.createElement('h3')
+            title.textContent = movie.title || 'Unknown Title'
+            title.className = 'movie-title'
+            
+    
+            const rating = document.createElement('p')
+            rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
+            rating.className = 'movie-rating'
+            
+    
+            popularContainer.appendChild(movieCard)
+            movieCard.appendChild(image)
+            movieCard.appendChild(title)
+            movieCard.appendChild(rating)
+          })
+        } else {
+          console.error('No movies found in the response.')
+        }
+        })
+        .catch(err => console.error(err));
 // setupCounter(document.querySelector('#counter'))
