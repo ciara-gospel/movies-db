@@ -114,7 +114,7 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
         image.src = posterPath
         image.alt = movie.title || 'Movie Title'
         image.className = 'movie-img'
-        
+ 
         // movieCard.innerHTML = `
         // <div class="number">${index + 1}</div>
         // <div class="popular-poster">
@@ -127,10 +127,9 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
         // </span>
         // <p class="movie-star">&#11088${movie.vote_average.toFixed (1)}</p>
         // </div>
-        
 
         // `
-        
+
         const movieDetail = document.createElement('div')
         movieDetail.textContent = movie.title || 'Unknown Title'
         movieDetail.className = 'movie-title-popular'
@@ -138,19 +137,16 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
         const title = document.createElement('h3')
         title.textContent = movie.title || 'Unknown Title'
         title.className = 'movie-title-popular'
-        
 
         const rating = document.createElement('p')
         rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
         rating.className = 'movie-rating'
-        
 
         popularContainer.appendChild(movieCard)
         movieCard.appendChild(image)
         movieCard.appendChild(movieDetail)
         movieDetail.appendChild(title)
         movieDetail.appendChild(rating)
-
       })
     } else {
       console.error('No movies found in the response.')
@@ -158,7 +154,7 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', option
   })
   .catch((err) => console.error('Error fetching movies:', err))
 
-  const options1 = {
+const options1 = {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -225,7 +221,7 @@ fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', optio
       data.results.forEach(movie => {
         const movieCard = document.createElement('div')
         movieCard.className = 'movie-card4'
-    
+
         const posterPath = movie.poster_path
           ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
           : 'https://via.placeholder.com/500x750?text=No+Image+Available'
@@ -242,8 +238,7 @@ fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', optio
         const rating = document.createElement('p')
         rating.innerHTML = `&#11088;${movie.vote_average || 'N/A'}`
         rating.className = 'movie-rating'
-            
-    
+
         popularContainer.appendChild(movieCard)
         movieCard.appendChild(image)
         movieCard.appendChild(title)
@@ -275,7 +270,7 @@ fetch('https://api.themoviedb.org/3/trending/tv/day?language=en-US', options3)
         const movieCard = document.createElement('div')
         movieCard.className = 'movie-card3'
 
-            const posterPath = movie.poster_path
+        const posterPath = movie.poster_path
           ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
           : 'https://via.placeholder.com/500x750?text=No+Image+Available'
 

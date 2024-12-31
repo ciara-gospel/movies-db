@@ -151,7 +151,10 @@ h2 {
   gap: 2rem;
 }
 
-#popular-release-poster, #just-release-poster, #watch-list-poster, #likes-poster {
+#popular-release-poster,
+#just-release-poster,
+#watch-list-poster,
+#likes-poster {
   display: grid;
   grid-template-columns: repeat(20, 1fr);
   gap: 1rem;
@@ -178,10 +181,11 @@ img {
   gap: 20px;
   border-radius: 24px;
   overflow: hidden;
-
 }
 
-.movie-card2, .movie-card3, .movie-card4 {
+.movie-card2,
+.movie-card3,
+.movie-card4 {
   min-width: 200px;
   min-height: 300px;
   object-fit: cover;
